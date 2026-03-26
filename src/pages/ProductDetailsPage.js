@@ -82,7 +82,25 @@ const ProductDetailsPage = () => {
             <span>({product.rating}) - {product.reviews} reviews</span>
           </Rating>
           
-          <Price>₹{product.price.toLocaleString('en-IN')}</Price>
+          <Price>
+            {product.price > 0 ? (
+              product.discount > 0 ? (
+                <>
+                  <span style={{ textDecoration: 'line-through', color: '#999', fontSize: '1.2rem', marginRight: '10px' }}>
+                    ₹{product.price.toLocaleString('en-IN')}
+                  </span>
+                  ₹{Math.round(product.price * (1 - product.discount / 100)).toLocaleString('en-IN')}
+                  <span style={{ marginLeft: '10px', fontSize: '1rem', color: 'var(--primary-color)', fontWeight: 700 }}>
+                    {product.discount}% off
+                  </span>
+                </>
+              ) : (
+                <>₹{product.price.toLocaleString('en-IN')}</>
+              )
+            ) : (
+              <span style={{ fontSize: '1.2rem', color: '#888' }}>Price on request</span>
+            )}
+          </Price>
           
           <Description>{product.description}</Description>
           
