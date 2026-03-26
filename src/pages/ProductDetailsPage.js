@@ -3,11 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Star, AlertTriangle } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import products from '../data/products';
+import { useProducts } from '../context/ProductsContext';
 import { getCategoryPathMapping } from '../data/dataService';
 import { useTranslation } from '../utils/translate';
-
-// Using products data imported from data file
 
 // Function to get category path from category name
 const getCategoryPathFromName = (categoryName) => {
@@ -21,6 +19,7 @@ const getCategoryPathFromName = (categoryName) => {
 };
 
 const ProductDetailsPage = () => {
+  const { products } = useProducts();
   const { productId } = useParams();
   const { cart, addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);

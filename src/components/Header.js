@@ -5,7 +5,7 @@ import { Search, Menu } from 'lucide-react';
 import CartIcon from './CartIcon';
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from '../utils/translate';
-import products from '../data/products';
+import { useProducts } from '../context/ProductsContext';
 
 const HeaderContainer = styled.header`
   background-color: ${({ scrolled }) => scrolled ? 'var(--background-color)' : 'transparent'};
@@ -192,6 +192,7 @@ const UserActions = styled.div`
 `;
 
 const Header = () => {
+  const { products } = useProducts();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -213,7 +214,7 @@ const Header = () => {
   const suggestions = searchTerm.trim().length >= 3
     ? products.filter(p =>
         p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.description.toLowerCase().includes(searchTerm.toLowerCase())
+        (p.description || '').toLowerCase().includes(searchTerm.toLowerCase())
       ).slice(0, 6)
     : [];
 

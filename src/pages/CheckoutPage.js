@@ -13,6 +13,7 @@ const CheckoutPage = () => {
     firstName: isAuthenticated ? user.name.split(' ')[0] : '',
     lastName: isAuthenticated ? user.name.split(' ')[1] || '' : '',
     email: isAuthenticated ? user.email : '',
+    phone: '',
     address: '',
     city: '',
     state: '',
@@ -74,7 +75,7 @@ const CheckoutPage = () => {
     
     // Required fields
     const requiredFields = [
-      'firstName', 'lastName', 'email', 'address', 'city', 'state', 'zipCode', 'country'
+      'firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'zipCode', 'country'
     ];
     
     requiredFields.forEach(field => {
@@ -86,6 +87,11 @@ const CheckoutPage = () => {
     // Email validation
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Phone validation
+    if (formData.phone && !/^\+?[\d\s\-]{10,15}$/.test(formData.phone)) {
+      newErrors.phone = 'Please enter a valid phone number';
     }
     
     setErrors(newErrors);
@@ -115,7 +121,7 @@ const CheckoutPage = () => {
             firstName: formData.firstName,
             lastName: formData.lastName,
             email: formData.email,
-            phone: formData.phone || '',
+            phone: formData.phone,
           },
           shippingAddress: {
             address: formData.address,
@@ -227,7 +233,21 @@ const CheckoutPage = () => {
               />
               {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
             </FormGroup>
-            
+
+            <FormGroup>
+              <Label htmlFor="phone">Phone Number</Label>
+              <Input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="10-digit mobile number"
+                value={formData.phone}
+                onChange={handleChange}
+                error={errors.phone}
+              />
+              {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
+            </FormGroup>
+
             <FormGroup>
               <Label htmlFor="address">Street Address</Label>
               <Input

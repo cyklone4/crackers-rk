@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import products from '../data/products';
+import { useProducts } from '../context/ProductsContext';
 import { useTranslation } from '../utils/translate';
 
 const AllInOnePage = () => {
+  const { products } = useProducts();
   const { t } = useTranslation();
   const { cart, addToCart, removeFromCart } = useCart();
   const location = useLocation();
@@ -25,8 +26,9 @@ const AllInOnePage = () => {
   
   // Filter products based on search term and selected category
   const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         product.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const desc = product.description || '';
+    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         desc.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
@@ -91,22 +93,22 @@ const AllInOnePage = () => {
             <ProductInfo>
               <ProductCategory>{product.category}</ProductCategory>
               <ProductName>{product.name}</ProductName>
-              <ProductDescription>{product.description.substring(0, 100)}...</ProductDescription>
+              <ProductDescription>{(product.description || '').substring(0, 100)}...</ProductDescription>
               
               <PriceContainer>
-                {product.price != null ? (
+                {product.price > 0 ? (
                   product.discount > 0 ? (
                     <>
                       <OriginalPrice>₹{product.price.toLocaleString('en-IN')}</OriginalPrice>
                       <CurrentPrice>
-                        ₹{(product.price * (1 - product.discount / 100)).toLocaleString('en-IN')}
+                        ₹{Math.round(product.price * (1 - product.discount / 100)).toLocaleString('en-IN')}
                       </CurrentPrice>
                     </>
                   ) : (
                     <CurrentPrice>₹{product.price.toLocaleString('en-IN')}</CurrentPrice>
                   )
                 ) : (
-                  <CurrentPrice>{t('product.priceOnRequest') || 'Price on request'}</CurrentPrice>
+                  <CurrentPrice>Price on request</CurrentPrice>
                 )}
               </PriceContainer>
               

@@ -128,9 +128,12 @@ export const CartProvider = ({ children }) => {
 
   // Add item to cart
   const addToCart = (product) => {
+    const sellingPrice = product.discount > 0
+      ? Math.round(product.price * (1 - product.discount / 100))
+      : product.price;
     dispatch({
       type: 'ADD_ITEM',
-      payload: product,
+      payload: { ...product, price: sellingPrice },
     });
   };
 

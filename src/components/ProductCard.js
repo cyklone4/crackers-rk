@@ -20,15 +20,19 @@ const ProductCard = ({ product }) => {
           <ProductCategory>{product.category}</ProductCategory>
           <ProductName>{product.name}</ProductName>
           <PriceContainer>
-            {product.discount > 0 ? (
-              <>
-                <OriginalPrice>₹{product.price.toLocaleString('en-IN')}</OriginalPrice>
-                <CurrentPrice>
-                  ₹{(product.price * (1 - product.discount / 100)).toLocaleString('en-IN')}
-                </CurrentPrice>
-              </>
+            {product.price > 0 ? (
+              product.discount > 0 ? (
+                <>
+                  <OriginalPrice>₹{product.price.toLocaleString('en-IN')}</OriginalPrice>
+                  <CurrentPrice>
+                    ₹{Math.round(product.price * (1 - product.discount / 100)).toLocaleString('en-IN')}
+                  </CurrentPrice>
+                </>
+              ) : (
+                <CurrentPrice>₹{product.price.toLocaleString('en-IN')}</CurrentPrice>
+              )
             ) : (
-              <CurrentPrice>₹{product.price.toLocaleString('en-IN')}</CurrentPrice>
+              <CurrentPrice>Price on request</CurrentPrice>
             )}
           </PriceContainer>
         </ProductInfo>

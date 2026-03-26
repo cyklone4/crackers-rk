@@ -1,19 +1,22 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
-import products from '../data/products';
+import { useProducts } from '../context/ProductsContext';
 import ProductCard from '../components/ProductCard';
-import { getCategoryPathMapping } from '../data/dataService';
+import { getCategories } from '../data/dataService';
 
 const CategoryPage = () => {
+  const { products } = useProducts();
   const { categoryPath } = useParams();
-  
-  // Get category name from path using data service
-  const pathMapping = getCategoryPathMapping();
-  const categoryName = pathMapping[categoryPath] || '';
-  
-  // Filter products by category
-  const categoryProducts = products.filter(product => product.category === categoryName);
+
+  // Find the category object by URL path
+  const category = getCategories().find(c => c.path === categoryPath);
+  const categoryName = category?.name || '';
+  // Support multi-category matching (matches array) or exact name
+  const matchSet = new Set(category?.matches || [categoryName]);
+
+  // Filter products by any matching category name
+  const categoryProducts = products.filter(product => matchSet.has(product.category));
 
   return (
     <PageContainer>

@@ -5,7 +5,8 @@
     "description": "Hand-held fireworks that emit colored flames, sparks, and other effects.",
     "icon": "Sparkles",
     "path": "sparklers",
-    "image": "https://images.pexels.com/photos/1578382/pexels-photo-1578382.jpeg?auto=compress&cs=tinysrgb&w=400"
+    "image": "https://images.pexels.com/photos/1578382/pexels-photo-1578382.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "matches": ["Sparklers", "Twinkling Star"]
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "description": "Fireworks that launch into the air and explode with various effects.",
     "icon": "Rocket",
     "path": "aerial-fireworks",
-    "image": "https://images.pexels.com/photos/19703613/pexels-photo-19703613.jpeg?auto=compress&cs=tinysrgb&w=400"
+    "image": "https://images.pexels.com/photos/19703613/pexels-photo-19703613.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "matches": ["Sky Shots", "Sky Shots (Elephant / Mr.Big)", "Standard Brand", "Joker Brand", "Vanitha Brand"]
   },
   {
     "id": 3,
@@ -21,7 +23,8 @@
     "description": "Ground spinners that rotate and emit colorful sparks.",
     "icon": "RefreshCw",
     "path": "chakkars-spinners",
-    "image": "https://images.pexels.com/photos/1662298/pexels-photo-1662298.jpeg?auto=compress&cs=tinysrgb&w=400"
+    "image": "https://images.pexels.com/photos/1662298/pexels-photo-1662298.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "matches": ["Ground Chakkars"]
   },
   {
     "id": 4,
@@ -29,7 +32,8 @@
     "description": "Stationary fireworks that emit showers of sparks.",
     "icon": "Flame",
     "path": "flower-pots-fountains",
-    "image": "https://images.pexels.com/photos/266532/pexels-photo-266532.jpeg?auto=compress&cs=tinysrgb&w=400"
+    "image": "https://images.pexels.com/photos/266532/pexels-photo-266532.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "matches": ["Fancy Fountains", "Flowerpots Emposed"]
   },
   {
     "id": 5,
@@ -37,7 +41,8 @@
     "description": "Fireworks that produce loud sounds and bangs.",
     "icon": "Zap",
     "path": "sound-crackers",
-    "image": "https://images.pexels.com/photos/949592/pexels-photo-949592.jpeg?auto=compress&cs=tinysrgb&w=400"
+    "image": "https://images.pexels.com/photos/949592/pexels-photo-949592.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "matches": ["One Sound Crackers", "Bijili Crackers", "Paper Bomb", "Bomb of Bomb"]
   },
   {
     "id": 6,
@@ -45,6 +50,7 @@
     "description": "Special assortments and unique fireworks.",
     "icon": "Gift",
     "path": "gift-packs-novelties",
-    "image": "https://images.pexels.com/photos/1303085/pexels-photo-1303085.jpeg?auto=compress&cs=tinysrgb&w=400"
+    "image": "https://images.pexels.com/photos/1303085/pexels-photo-1303085.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "matches": ["Gift Boxes"]
   }
 ]

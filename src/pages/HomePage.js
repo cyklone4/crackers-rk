@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Shield, CheckCircle, Tag, Star, Phone, MapPin } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
-import products from '../data/products';
+import { useProducts } from '../context/ProductsContext';
 import { useTranslation } from '../utils/translate';
 
 const HERO_IMAGE = 'https://images.pexels.com/photos/33851784/pexels-photo-33851784.jpeg?auto=compress&cs=tinysrgb&w=1920';
@@ -284,6 +284,7 @@ const TrustBadge = styled.div`
 `;
 
 const HomePage = () => {
+  const { products } = useProducts();
   const { t } = useTranslation();
   
   // Quick links data

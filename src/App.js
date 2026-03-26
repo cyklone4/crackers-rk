@@ -11,6 +11,7 @@ import GlobalStyles from './components/GlobalStyles';
 import { CartProvider } from './context/CartContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
+import { ProductsProvider } from './context/ProductsContext';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -35,6 +36,7 @@ function App() {
     <Router>
       <AuthProvider>
         <LanguageProvider>
+          <ProductsProvider>
           <CartProvider>
             <GlobalStyles />
             <div className="App">
@@ -62,6 +64,7 @@ function App() {
               <Footer />
             </div>
           </CartProvider>
+          </ProductsProvider>
         </LanguageProvider>
       </AuthProvider>
     </Router>
