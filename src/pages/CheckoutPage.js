@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 
 const CheckoutPage = () => {
-  const { cart } = useCart();
+  const { cart, clearCart } = useCart();
   const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
   
@@ -21,6 +21,8 @@ const CheckoutPage = () => {
   });
   
   const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [pincodeLookup, setPincodeLookup] = useState({ loading: false, error: '' });
 
   // Auto-fill city & state from pincode
@@ -91,27 +93,69 @@ const CheckoutPage = () => {
   };
   
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (validateForm()) {
-      // In a real app, this would send the order to a backend
-      // For now, we'll simulate a successful order
-      
-      // Generate a random order number
-      const randomOrderNumber = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
-      
-      // Create order details object to pass to confirmation page
-      const orderDetails = {
-        orderNumber: randomOrderNumber,
-        orderDate: new Date().toLocaleDateString(),
-        totalAmount: cart.totalPrice + cart.totalPrice * 0.08,
-        items: cart.items,
-        shippingInfo: formData
-      };
-      
-      // Redirect to order confirmation page with order details
-      navigate('/order-confirmation', { state: { orderDetails } });
+
+    if (!validateForm()) return;
+
+    setSubmitting(true);
+    setSubmitError('');
+
+    const subtotal = cart.totalPrice;
+    const taxAmount = Math.round(subtotal * 0.28);
+    const totalAmount = subtotal + taxAmount;
+
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || '';
+      const res = await fetch(`${apiUrl}/api/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customer: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone || '',
+          },
+          shippingAddress: {
+            address: formData.address,
+            city: formData.city,
+            state: formData.state,
+            zipCode: formData.zipCode,
+            country: formData.country,
+          },
+          items: cart.items.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            image: item.image,
+          })),
+          subtotal,
+        }),
+      });
+
+      if (!res.ok) throw new Error('Failed to place order');
+
+      const data = await res.json();
+
+      clearCart();
+
+      navigate('/order-confirmation', {
+        state: {
+          orderDetails: {
+            orderNumber: data.orderNumber,
+            orderDate: new Date().toLocaleDateString(),
+            totalAmount: data.totalAmount,
+            items: cart.items,
+            shippingInfo: formData,
+          },
+        },
+      });
+    } catch (err) {
+      console.error(err);
+      setSubmitError('Could not place order. Please try again.');
+      setSubmitting(false);
     }
   };
   
@@ -268,8 +312,9 @@ const CheckoutPage = () => {
             </div>
           </PaymentMessage>
           
-          <PlaceOrderButton type="submit">
-            Place Order
+          {submitError && <ErrorMessage style={{ marginBottom: '0.5rem' }}>{submitError}</ErrorMessage>}
+          <PlaceOrderButton type="submit" disabled={submitting}>
+            {submitting ? 'Placing Order…' : 'Place Order'}
           </PlaceOrderButton>
         </CheckoutForm>
         
