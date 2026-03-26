@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductsContext';
 import { useTranslation } from '../utils/translate';
@@ -56,6 +57,11 @@ const AllInOnePage = () => {
   
   return (
     <PageContainer>
+      <SEO
+        title="All Products – Fireworks & Crackers"
+        description="Browse all 194+ fireworks and crackers products from RK Krackers, Sivakasi. Sky shots, rockets, ground chakkar, sparklers, gift boxes & more. Filter by category, sort by price."
+        canonical="/all-products"
+      />
       <PageHeader>
         <h1>{t('allInOne.title')}</h1>
         <p>{t('allInOne.description')}</p>

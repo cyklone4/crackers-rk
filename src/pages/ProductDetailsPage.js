@@ -6,6 +6,7 @@ import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductsContext';
 import { getCategoryPathMapping } from '../data/dataService';
 import { useTranslation } from '../utils/translate';
+import SEO from '../components/SEO';
 
 // Function to get category path from category name
 const getCategoryPathFromName = (categoryName) => {
@@ -58,10 +59,38 @@ const ProductDetailsPage = () => {
     }, 3000);
   };
 
+  const discountedPrice = product.price > 0 && product.discount > 0
+    ? Math.round(product.price * (1 - product.discount / 100))
+    : product.price;
+
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.description || `${product.name} – premium quality fireworks from RK Krackers, Sivakasi.`,
+    image: product.image || undefined,
+    brand: { '@type': 'Brand', name: 'RK Krackers' },
+    offers: {
+      '@type': 'Offer',
+      price: discountedPrice,
+      priceCurrency: 'INR',
+      availability: product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      seller: { '@type': 'Organization', name: 'RK Krackers' },
+    },
+  };
+
   return (
     <PageContainer>
+      <SEO
+        title={product.name}
+        description={`Buy ${product.name} online from RK Krackers, Sivakasi.${product.description ? ' ' + product.description.slice(0, 120) : ''} Price: ₹${discountedPrice}. ${product.stock > 0 ? 'In stock.' : ''}`}
+        canonical={`/product/${productId}`}
+        image={product.image || undefined}
+        type="product"
+        jsonLd={productJsonLd}
+      />
       <BreadcrumbNav>
-        <Link to="/">{t('nav.home')}</Link> &gt; 
+        <Link to="/">{t('nav.home')}</Link> &gt;
         <Link to="/categories">{t('nav.categories')}</Link> &gt; 
         <Link to={`/categories/${getCategoryPathFromName(product.category)}`}>{product.category}</Link> &gt; 
         <span>{product.name}</span>

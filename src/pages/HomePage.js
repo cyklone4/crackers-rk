@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { Shield, CheckCircle, Tag, Star, Phone, MapPin } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import { useProducts } from '../context/ProductsContext';
@@ -307,6 +308,7 @@ const HomePage = () => {
   
   return (
     <>
+      <SEO canonical="/" />
       <HeroSection>
         <HeroContent>
           <HeroTitle>

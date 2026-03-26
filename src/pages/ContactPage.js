@@ -2,6 +2,7 @@ import React from 'react';
 import { getCategories, getCrackerTypesByCategory } from '../data/dataService';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { MapPin, Phone, Mail, Clock, Flame, Eye, Droplets, Ruler } from 'lucide-react';
 import { getCategoryIconComponent } from '../utils/categoryIcons';
 import { useTranslation } from '../utils/translate';
@@ -11,6 +12,11 @@ const ContactPage = () => {
 
   return (
     <PageContainer>
+      <SEO
+        title="Contact Us"
+        description="Contact RK Krackers – call +91 98423 72122 or +91 89408 88500. Located at 3/1991 Sivakasi Road, Virudhunagar, Tamil Nadu. Order fireworks online or visit us."
+        canonical="/contact"
+      />
       <PageHeader>
         <h1>{t('contact.title')}</h1>
         <Breadcrumb>

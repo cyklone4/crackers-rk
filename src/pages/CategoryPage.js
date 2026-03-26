@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useProducts } from '../context/ProductsContext';
 import ProductCard from '../components/ProductCard';
 import { getCategories } from '../data/dataService';
+import SEO from '../components/SEO';
 
 const CategoryPage = () => {
   const { products } = useProducts();
@@ -20,6 +21,11 @@ const CategoryPage = () => {
 
   return (
     <PageContainer>
+      <SEO
+        title={categoryName || 'Fireworks Category'}
+        description={`Buy ${categoryName ? categoryName.toLowerCase() : 'fireworks'} online from RK Krackers, Sivakasi. ${categoryProducts.length}+ products available. Premium quality, up to 30% discount.`}
+        canonical={`/categories/${categoryPath}`}
+      />
       <BreadcrumbNav>
         <Link to="/">Home</Link> &gt; 
         <Link to="/categories">Categories</Link> &gt; 
