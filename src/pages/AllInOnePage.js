@@ -108,7 +108,7 @@ const AllInOnePage = () => {
                     <CurrentPrice>₹{product.price.toLocaleString('en-IN')}</CurrentPrice>
                   )
                 ) : (
-                  <CurrentPrice>Price on request</CurrentPrice>
+                  <CurrentPrice>₹0</CurrentPrice>
                 )}
               </PriceContainer>
               

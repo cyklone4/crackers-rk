@@ -98,7 +98,7 @@ const ProductDetailsPage = () => {
                 <>₹{product.price.toLocaleString('en-IN')}</>
               )
             ) : (
-              <span style={{ fontSize: '1.2rem', color: '#888' }}>Price on request</span>
+              <>₹0</>
             )}
           </Price>
           
